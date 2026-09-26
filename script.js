@@ -112,8 +112,7 @@ let currentLanguage =
   "ar";
 
 
-let languageTimer =
-  null;
+
 
 
 
@@ -208,67 +207,11 @@ function toggleLanguage() {
       ? "en"
       : "ar";
 
-
   translatePage(
     nextLanguage
   );
 
-
-  restartAutomaticLanguageSwitch();
-
 }
-
-
-
-languageButton.addEventListener(
-  "click",
-  toggleLanguage
-);
-
-
-
-/* ==========================================
-   AUTO LANGUAGE SWITCH
-========================================== */
-
-function startAutomaticLanguageSwitch() {
-
-  languageTimer =
-    setInterval(
-      () => {
-
-        const nextLanguage =
-          currentLanguage === "ar"
-            ? "en"
-            : "ar";
-
-
-        translatePage(
-          nextLanguage
-        );
-
-      },
-      12000
-    );
-
-}
-
-
-
-function restartAutomaticLanguageSwitch() {
-
-  clearInterval(
-    languageTimer
-  );
-
-
-  startAutomaticLanguageSwitch();
-
-}
-
-
-
-startAutomaticLanguageSwitch();
 
 
 
