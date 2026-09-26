@@ -12,7 +12,7 @@
 
   <meta
     name="theme-color"
-    content="#f7f6f2"
+    content="#0b0b0b"
   >
 
   <title>
@@ -25,7 +25,7 @@
   >
 
 
-  <!-- Fonts -->
+  <!-- Google Fonts -->
 
   <link
     rel="preconnect"
@@ -60,11 +60,11 @@
 </head>
 
 
-<body>
+<body class="dark-mode ar">
 
 
   <!-- ==========================================
-       CURSOR LIGHT
+       CURSOR GLOW
   =========================================== -->
 
   <div
@@ -94,6 +94,8 @@
     <div class="header-controls">
 
 
+      <!-- اللغة -->
+
       <button
         id="languageButton"
         class="control-button"
@@ -109,16 +111,18 @@
 
 
 
+      <!-- الوضع الداكن / الفاتح -->
+
       <button
         id="themeButton"
         class="control-button"
         type="button"
-        aria-label="Toggle dark mode"
+        aria-label="Toggle theme"
       >
 
         <i
           id="themeIcon"
-          class="fa-regular fa-moon"
+          class="fa-regular fa-sun"
         ></i>
 
       </button>
@@ -131,24 +135,38 @@
 
 
 
-  <!-- ==========================================
-       HERO
-  =========================================== -->
-
   <main>
 
 
+    <!-- ==========================================
+         HERO
+         الصورة الأولى بالخلفية
+    =========================================== -->
+
     <section
       id="hero"
-      class="hero-section"
+      class="hero-section cinematic-background"
     >
 
 
-      <!-- BIG DATE -->
+      <!-- Background image -->
+
+      <img
+        class="section-background-image hero-background-image"
+        src="minimal-hero.jpg"
+        alt="رامي ولينا"
+      >
+
+
+      <div class="cinematic-overlay hero-overlay"></div>
+
+
+
+      <!-- رقم اليوم العملاق -->
 
       <div
         class="giant-number parallax-text"
-        data-speed="0.12"
+        data-speed="0.08"
         aria-hidden="true"
       >
         14
@@ -169,18 +187,13 @@
 
 
 
-        <div
-          class="names-wrapper"
-          aria-label="رامي ولينا"
+        <h1
+          class="hero-names"
+          data-ar="رامي & لينا"
+          data-en="RAMI & LINA"
         >
-
-          <h1
-            id="animatedNames"
-            data-ar="رامي & لينا"
-            data-en="RAMI & LINA"
-          ></h1>
-
-        </div>
+          رامي & لينا
+        </h1>
 
 
 
@@ -199,8 +212,33 @@
 
 
 
+        <div class="hero-date">
+
+          <span>
+            14
+          </span>
+
+          <i></i>
+
+          <span
+            data-ar="مايو"
+            data-en="MAY"
+          >
+            مايو
+          </span>
+
+          <i></i>
+
+          <span>
+            2027
+          </span>
+
+        </div>
+
+
+
         <a
-          href="#details"
+          href="#statement"
           class="discover-link"
         >
 
@@ -220,25 +258,14 @@
 
 
 
-      <div
-        class="side-date"
-        aria-hidden="true"
-      >
+      <div class="film-caption">
 
         <span>
-          14
+          FRAME 01
         </span>
 
-        <i></i>
-
         <span>
-          05
-        </span>
-
-        <i></i>
-
-        <span>
-          27
+          RAMI / LINA
         </span>
 
       </div>
@@ -252,24 +279,26 @@
          STATEMENT
     =========================================== -->
 
-    <section class="statement-section">
+    <section
+      id="statement"
+      class="statement-section"
+    >
 
 
       <div
         class="statement-word parallax-text"
-        data-speed="0.07"
+        data-speed="0.05"
         aria-hidden="true"
       >
         TOGETHER
       </div>
 
 
+
       <div class="statement-content reveal">
 
 
-        <span
-          class="section-number"
-        >
+        <span class="section-number">
           01
         </span>
 
@@ -282,6 +311,82 @@
           يكفي أن نعيشها مع الأشخاص الذين نحبهم
         </p>
 
+
+      </div>
+
+
+    </section>
+
+
+
+    <!-- ==========================================
+         الصورة الثانية
+         CINEMATIC STORY
+    =========================================== -->
+
+    <section class="cinematic-story-section cinematic-background">
+
+
+      <img
+        class="section-background-image story-background-image"
+        src="minimal-story.jpg"
+        alt="لحظة من قصة رامي ولينا"
+      >
+
+
+      <div class="cinematic-overlay story-overlay"></div>
+
+
+
+      <div
+        class="story-giant-word parallax-text"
+        data-speed="0.06"
+        aria-hidden="true"
+      >
+        US
+      </div>
+
+
+
+      <div class="cinematic-story-content reveal">
+
+
+        <span>
+          FRAME 02
+        </span>
+
+
+        <h2
+          data-ar="لحظة واحدة قد تبدأ منها حكاية كاملة"
+          data-en="One moment can become the beginning of an entire story."
+        >
+          لحظة واحدة
+          قد تبدأ منها حكاية كاملة
+        </h2>
+
+
+        <p
+          data-ar="واليوم نختار أن نشارككم بداية الفصل الأجمل"
+          data-en="Today, we choose to share the beginning of our most beautiful chapter with you."
+        >
+          واليوم نختار أن نشارككم
+          بداية الفصل الأجمل
+        </p>
+
+
+      </div>
+
+
+
+      <div class="film-caption">
+
+        <span>
+          MOMENT 02
+        </span>
+
+        <span>
+          2027
+        </span>
 
       </div>
 
@@ -332,7 +437,7 @@
       <div class="details-grid">
 
 
-        <!-- DATE -->
+        <!-- التاريخ -->
 
         <article class="detail-card reveal">
 
@@ -362,7 +467,7 @@
 
 
 
-        <!-- TIME -->
+        <!-- الوقت -->
 
         <article class="detail-card reveal">
 
@@ -392,7 +497,7 @@
 
 
 
-        <!-- VENUE -->
+        <!-- المكان -->
 
         <article class="detail-card reveal">
 
@@ -448,7 +553,9 @@
           عرض الموقع
         </span>
 
+
         <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
 
       </a>
 
@@ -466,7 +573,7 @@
 
       <div
         class="date-background parallax-text"
-        data-speed="0.09"
+        data-speed="0.07"
         aria-hidden="true"
       >
         14
@@ -646,7 +753,7 @@
 
 
     <!-- ==========================================
-         TYPOGRAPHY SECTION
+         FOREVER
     =========================================== -->
 
     <section class="typography-section">
@@ -654,10 +761,12 @@
 
       <div
         class="large-word parallax-text"
-        data-speed="0.08"
+        data-speed="0.06"
+        aria-hidden="true"
       >
         FOREVER
       </div>
+
 
 
       <div class="typography-content reveal">
@@ -697,6 +806,7 @@
 
       <div class="actions-header reveal">
 
+
         <span class="section-number">
           04
         </span>
@@ -708,6 +818,7 @@
         >
           احتفظوا بالموعد
         </h2>
+
 
       </div>
 
@@ -754,6 +865,7 @@
 
 
       </div>
+
 
 
       <p
