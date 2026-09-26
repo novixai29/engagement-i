@@ -1,10 +1,9 @@
 /* ==========================================
    MINIMAL LUXURY
-
    رامي & لينا
 
    14 مايو 2027
-   الساعة 6:30 مساء
+   6:30 مساء
 ========================================== */
 
 
@@ -48,12 +47,6 @@ const engagementDate =
 
 const body =
   document.body;
-
-
-const animatedNames =
-  document.getElementById(
-    "animatedNames"
-  );
 
 
 const languageButton =
@@ -123,6 +116,7 @@ let languageTimer =
   null;
 
 
+
 function translatePage(
   language
 ) {
@@ -140,37 +134,21 @@ function translatePage(
   elements.forEach(
     element => {
 
-      const newText =
+      const value =
         element.getAttribute(
           `data-${language}`
         );
 
 
-      /*
-        أسماء العروسين نتعامل وياها
-        بوظيفة الأنيميشن بشكل منفصل.
-      */
-
-      if (
-        element.id ===
-        "animatedNames"
-      ) {
-
-        return;
-
-      }
-
-
       element.textContent =
-        newText;
+        value;
 
     }
   );
 
 
   if (
-    language ===
-    "ar"
+    language === "ar"
   ) {
 
     document.documentElement.lang =
@@ -219,9 +197,6 @@ function translatePage(
 
   }
 
-
-  animateNames();
-
 }
 
 
@@ -253,7 +228,7 @@ languageButton.addEventListener(
 
 
 /* ==========================================
-   AUTOMATIC AR / EN
+   AUTO LANGUAGE SWITCH
 ========================================== */
 
 function startAutomaticLanguageSwitch() {
@@ -298,107 +273,87 @@ startAutomaticLanguageSwitch();
 
 
 /* ==========================================
-   LETTER BY LETTER NAMES
+   THEME
+
+   الوضع الداكن هو الافتراضي
 ========================================== */
 
-function animateNames() {
+function applyTheme(
+  theme
+) {
 
-  const text =
-    animatedNames.getAttribute(
-      `data-${currentLanguage}`
+  if (
+    theme === "light"
+  ) {
+
+    body.classList.remove(
+      "dark-mode"
     );
 
 
-  animatedNames.innerHTML =
-    "";
+    themeIcon.className =
+      "fa-regular fa-moon";
 
 
-  const characters =
-    Array.from(
-      text
+    document
+      .querySelector(
+        'meta[name="theme-color"]'
+      )
+      .setAttribute(
+        "content",
+        "#f4f3ef"
+      );
+
+  } else {
+
+    body.classList.add(
+      "dark-mode"
     );
 
 
-  characters.forEach(
-    (character, index) => {
-
-      const span =
-        document.createElement(
-          "span"
-        );
+    themeIcon.className =
+      "fa-regular fa-sun";
 
 
-      span.className =
-        "name-letter";
-
-
-      if (
-        character === " "
-      ) {
-
-        span.innerHTML =
-          "&nbsp;";
-
-      } else {
-
-        span.textContent =
-          character;
-
-      }
-
-
-      animatedNames.appendChild(
-        span
+    document
+      .querySelector(
+        'meta[name="theme-color"]'
+      )
+      .setAttribute(
+        "content",
+        "#090909"
       );
 
-
-      setTimeout(
-        () => {
-
-          span.classList.add(
-            "visible"
-          );
-
-        },
-        90 * index
-      );
-
-    }
-  );
+  }
 
 }
 
 
 
-animateNames();
+/*
+   إذا المستخدم ما اختار سابقاً أي وضع،
+   يبدأ الموقع Dark.
+*/
+
+const savedTheme =
+  localStorage.getItem(
+    "minimal-theme"
+  );
 
 
+if (
+  savedTheme === "light"
+) {
 
-/* ==========================================
-   DARK MODE
-========================================== */
+  applyTheme(
+    "light"
+  );
 
-function updateThemeIcon() {
+} else {
 
-  const dark =
-    body.classList.contains(
-      "dark-mode"
-    );
-
-
-  if (
-    dark
-  ) {
-
-    themeIcon.className =
-      "fa-regular fa-sun";
-
-  } else {
-
-    themeIcon.className =
-      "fa-regular fa-moon";
-
-  }
+  applyTheme(
+    "dark"
+  );
 
 }
 
@@ -408,51 +363,30 @@ themeButton.addEventListener(
   "click",
   () => {
 
-    body.classList.toggle(
-      "dark-mode"
-    );
-
-
-    const dark =
+    const currentlyDark =
       body.classList.contains(
         "dark-mode"
       );
 
 
-    localStorage.setItem(
-      "minimal-theme",
-      dark
-        ? "dark"
-        : "light"
+    const nextTheme =
+      currentlyDark
+        ? "light"
+        : "dark";
+
+
+    applyTheme(
+      nextTheme
     );
 
 
-    updateThemeIcon();
+    localStorage.setItem(
+      "minimal-theme",
+      nextTheme
+    );
 
   }
 );
-
-
-
-const savedTheme =
-  localStorage.getItem(
-    "minimal-theme"
-  );
-
-
-if (
-  savedTheme ===
-  "dark"
-) {
-
-  body.classList.add(
-    "dark-mode"
-  );
-
-}
-
-
-updateThemeIcon();
 
 
 
@@ -477,31 +411,42 @@ window.addEventListener(
 
 
 /* ==========================================
-   HEADER
+   HEADER SCROLL
 ========================================== */
+
+function updateHeader() {
+
+  if (
+    window.scrollY >
+    25
+  ) {
+
+    header.classList.add(
+      "scrolled"
+    );
+
+  } else {
+
+    header.classList.remove(
+      "scrolled"
+    );
+
+  }
+
+}
+
+
 
 window.addEventListener(
   "scroll",
-  () => {
-
-    if (
-      window.scrollY > 25
-    ) {
-
-      header.classList.add(
-        "scrolled"
-      );
-
-    } else {
-
-      header.classList.remove(
-        "scrolled"
-      );
-
-    }
-
+  updateHeader,
+  {
+    passive: true
   }
 );
+
+
+updateHeader();
 
 
 
@@ -515,24 +460,28 @@ const parallaxElements =
   );
 
 
+let parallaxTicking =
+  false;
+
+
+
 function updateParallax() {
-
-  const scrollY =
-    window.scrollY;
-
 
   parallaxElements.forEach(
     element => {
+
+      const parent =
+        element.parentElement;
+
+
+      const rect =
+        parent.getBoundingClientRect();
+
 
       const speed =
         Number(
           element.dataset.speed
         ) || 0.05;
-
-
-      const rect =
-        element.parentElement
-          .getBoundingClientRect();
 
 
       const center =
@@ -549,13 +498,9 @@ function updateParallax() {
         viewportCenter;
 
 
-      /*
-        نستخدم CSS variable حتى ما نخرب
-        transform الأصلي للعنصر.
-      */
-
       const offset =
-        distance * speed;
+        distance *
+        speed;
 
 
       element.style.marginTop =
@@ -564,13 +509,36 @@ function updateParallax() {
     }
   );
 
+
+  parallaxTicking =
+    false;
+
 }
 
 
 
 window.addEventListener(
   "scroll",
-  updateParallax,
+  () => {
+
+    if (
+      parallaxTicking
+    ) {
+
+      return;
+
+    }
+
+
+    parallaxTicking =
+      true;
+
+
+    requestAnimationFrame(
+      updateParallax
+    );
+
+  },
   {
     passive: true
   }
@@ -578,6 +546,105 @@ window.addEventListener(
 
 
 updateParallax();
+
+
+
+/* ==========================================
+   PHOTO PARALLAX
+========================================== */
+
+const heroImage =
+  document.querySelector(
+    ".hero-background-image"
+  );
+
+
+const storyImage =
+  document.querySelector(
+    ".story-background-image"
+  );
+
+
+
+function updatePhotoParallax() {
+
+  /*
+     الصورة الأولى
+  */
+
+  const heroSection =
+    document.querySelector(
+      ".hero-section"
+    );
+
+
+  const heroRect =
+    heroSection
+      .getBoundingClientRect();
+
+
+  if (
+    heroRect.bottom > 0 &&
+    heroRect.top <
+    window.innerHeight
+  ) {
+
+    const offset =
+      heroRect.top *
+      -0.06;
+
+
+    heroImage.style.transform =
+      `scale(1.05) translateY(${offset}px)`;
+
+  }
+
+
+  /*
+     الصورة الثانية
+  */
+
+  const storySection =
+    document.querySelector(
+      ".cinematic-story-section"
+    );
+
+
+  const storyRect =
+    storySection
+      .getBoundingClientRect();
+
+
+  if (
+    storyRect.bottom > 0 &&
+    storyRect.top <
+    window.innerHeight
+  ) {
+
+    const offset =
+      storyRect.top *
+      -0.045;
+
+
+    storyImage.style.transform =
+      `scale(1.07) translateY(${offset}px)`;
+
+  }
+
+}
+
+
+
+window.addEventListener(
+  "scroll",
+  updatePhotoParallax,
+  {
+    passive: true
+  }
+);
+
+
+updatePhotoParallax();
 
 
 
@@ -602,14 +669,17 @@ const revealObserver =
             entry.isIntersecting
           ) {
 
-            entry.target.classList.add(
-              "visible"
-            );
+            entry.target
+              .classList
+              .add(
+                "visible"
+              );
 
 
-            revealObserver.unobserve(
-              entry.target
-            );
+            revealObserver
+              .unobserve(
+                entry.target
+              );
 
           }
 
@@ -654,6 +724,7 @@ function updateCountdown() {
   const distance =
     engagementDate -
     now;
+
 
 
   if (
@@ -724,7 +795,8 @@ function updateCountdown() {
           60 *
           24
         )
-      ) /
+      )
+      /
       (
         1000 *
         60 *
@@ -742,7 +814,8 @@ function updateCountdown() {
           60 *
           60
         )
-      ) /
+      )
+      /
       (
         1000 *
         60
@@ -758,7 +831,8 @@ function updateCountdown() {
           1000 *
           60
         )
-      ) /
+      )
+      /
       1000
     );
 
@@ -950,7 +1024,9 @@ async function shareInvitation() {
 
     text:
       currentLanguage === "ar"
+
         ? "ندعوكم لمشاركتنا بداية فصل جديد من حياتنا."
+
         : "We invite you to share the beginning of our new chapter.",
 
     url:
@@ -994,7 +1070,9 @@ async function shareInvitation() {
 
     shareMessage.textContent =
       currentLanguage === "ar"
+
         ? "تم نسخ رابط الدعوة"
+
         : "Invitation link copied";
 
 
@@ -1012,7 +1090,9 @@ async function shareInvitation() {
 
     shareMessage.textContent =
       currentLanguage === "ar"
+
         ? "تعذر نسخ الرابط"
+
         : "Unable to copy link";
 
   }
