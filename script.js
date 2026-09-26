@@ -1,14 +1,18 @@
 /* ==========================================
    MINIMAL LUXURY
+
    رامي & لينا
 
-   14 مايو 2027
-   6:30 مساء
+   LANGUAGE:
+   Manual only
+
+   DEFAULT THEME:
+   Dark
 ========================================== */
 
 
 /* ==========================================
-   EVENT
+   EVENT DATA
 ========================================== */
 
 const EVENT = {
@@ -32,6 +36,7 @@ const EVENT = {
     "Elite Hall - Mosul - Nineveh"
 
 };
+
 
 
 const engagementDate =
@@ -103,77 +108,150 @@ const header =
   );
 
 
+const themeColorMeta =
+  document.querySelector(
+    'meta[name="theme-color"]'
+  );
+
+
 
 /* ==========================================
-   LANGUAGE — MANUAL ONLY
+   LANGUAGE
+   MANUAL ONLY
 ========================================== */
 
-let currentLanguage = "ar";
-
-const languageButton =
-  document.getElementById("languageButton");
-
-const languageButtonText =
-  document.getElementById("languageButtonText");
+let currentLanguage =
+  "ar";
 
 
-function setLanguage(language) {
 
-  currentLanguage = language;
+function setLanguage(
+  language
+) {
 
-  const elements =
+  currentLanguage =
+    language;
+
+
+  const translatableElements =
     document.querySelectorAll(
       "[data-ar][data-en]"
     );
 
-  elements.forEach(element => {
 
-    const text =
-      language === "ar"
-        ? element.getAttribute("data-ar")
-        : element.getAttribute("data-en");
+  translatableElements.forEach(
+    element => {
 
-    element.textContent = text;
+      const text =
+        language === "ar"
 
-  });
+          ? element.getAttribute(
+              "data-ar"
+            )
+
+          : element.getAttribute(
+              "data-en"
+            );
 
 
-  if (language === "ar") {
+      element.textContent =
+        text;
 
-    document.documentElement.lang = "ar";
-    document.documentElement.dir = "rtl";
+    }
+  );
 
-    document.body.classList.remove("en");
-    document.body.classList.add("ar");
 
-    languageButtonText.textContent = "EN";
 
-  } else {
+  /* Arabic */
 
-    document.documentElement.lang = "en";
-    document.documentElement.dir = "ltr";
+  if (
+    language === "ar"
+  ) {
 
-    document.body.classList.remove("ar");
-    document.body.classList.add("en");
+    document.documentElement.lang =
+      "ar";
 
-    languageButtonText.textContent = "AR";
+
+    document.documentElement.dir =
+      "rtl";
+
+
+    body.classList.remove(
+      "en"
+    );
+
+
+    body.classList.add(
+      "ar"
+    );
+
+
+    /*
+      لأن الصفحة حالياً عربي
+      نعرض EN حتى يقدر يحول للإنكليزي
+    */
+
+    languageButtonText.textContent =
+      "EN";
+
+
+    return;
 
   }
 
+
+
+  /* English */
+
+  document.documentElement.lang =
+    "en";
+
+
+  document.documentElement.dir =
+    "ltr";
+
+
+  body.classList.remove(
+    "ar"
+  );
+
+
+  body.classList.add(
+    "en"
+  );
+
+
+  /*
+    لأن الصفحة حالياً English
+    نعرض AR حتى يقدر يرجع للعربي
+  */
+
+  languageButtonText.textContent =
+    "AR";
+
 }
 
+
+
+/* زر اللغة */
 
 languageButton.addEventListener(
   "click",
   () => {
 
-    if (currentLanguage === "ar") {
+    if (
+      currentLanguage === "ar"
+    ) {
 
-      setLanguage("en");
+      setLanguage(
+        "en"
+      );
 
     } else {
 
-      setLanguage("ar");
+      setLanguage(
+        "ar"
+      );
 
     }
 
@@ -181,42 +259,33 @@ languageButton.addEventListener(
 );
 
 
-/* يبدأ الموقع بالعربي */
 
-setLanguage("ar");
+/*
+   يبدأ الموقع دائماً بالعربي.
+
+   لا يوجد:
+   setInterval
+   languageTimer
+   auto language switching
+*/
+
+setLanguage(
+  "ar"
+);
+
+
+
 /* ==========================================
    THEME
-
-   الوضع الداكن هو الافتراضي
 ========================================== */
 
-function applyTheme(
+function setTheme(
   theme
 ) {
 
   if (
-    theme === "light"
+    theme === "dark"
   ) {
-
-    body.classList.remove(
-      "dark-mode"
-    );
-
-
-    themeIcon.className =
-      "fa-regular fa-moon";
-
-
-    document
-      .querySelector(
-        'meta[name="theme-color"]'
-      )
-      .setAttribute(
-        "content",
-        "#f4f3ef"
-      );
-
-  } else {
 
     body.classList.add(
       "dark-mode"
@@ -227,49 +296,49 @@ function applyTheme(
       "fa-regular fa-sun";
 
 
-    document
-      .querySelector(
-        'meta[name="theme-color"]'
-      )
-      .setAttribute(
-        "content",
-        "#090909"
-      );
+    themeColorMeta.setAttribute(
+      "content",
+      "#090909"
+    );
+
+
+    return;
 
   }
+
+
+
+  body.classList.remove(
+    "dark-mode"
+  );
+
+
+  themeIcon.className =
+    "fa-regular fa-moon";
+
+
+  themeColorMeta.setAttribute(
+    "content",
+    "#f4f3ef"
+  );
 
 }
 
 
 
 /*
-   إذا المستخدم ما اختار سابقاً أي وضع،
-   يبدأ الموقع Dark.
+   مهم:
+   في كل مرة تنفتح الدعوة
+   يبدأ الموقع DARK.
 */
 
-const savedTheme =
-  localStorage.getItem(
-    "minimal-theme"
-  );
+setTheme(
+  "dark"
+);
 
 
-if (
-  savedTheme === "light"
-) {
 
-  applyTheme(
-    "light"
-  );
-
-} else {
-
-  applyTheme(
-    "dark"
-  );
-
-}
-
-
+/* زر الوضع */
 
 themeButton.addEventListener(
   "click",
@@ -281,21 +350,21 @@ themeButton.addEventListener(
       );
 
 
-    const nextTheme =
+    if (
       currentlyDark
-        ? "light"
-        : "dark";
+    ) {
 
+      setTheme(
+        "light"
+      );
 
-    applyTheme(
-      nextTheme
-    );
+    } else {
 
+      setTheme(
+        "dark"
+      );
 
-    localStorage.setItem(
-      "minimal-theme",
-      nextTheme
-    );
+    }
 
   }
 );
@@ -309,6 +378,15 @@ themeButton.addEventListener(
 window.addEventListener(
   "mousemove",
   event => {
+
+    if (
+      !cursorGlow
+    ) {
+
+      return;
+
+    }
+
 
     cursorGlow.style.left =
       `${event.clientX}px`;
@@ -363,7 +441,7 @@ updateHeader();
 
 
 /* ==========================================
-   PARALLAX TYPOGRAPHY
+   TYPOGRAPHY PARALLAX
 ========================================== */
 
 const parallaxElements =
@@ -471,75 +549,91 @@ const heroImage =
   );
 
 
+const heroSection =
+  document.querySelector(
+    ".hero-section"
+  );
+
+
 const storyImage =
   document.querySelector(
     ".story-background-image"
   );
 
 
+const storySection =
+  document.querySelector(
+    ".cinematic-story-section"
+  );
+
+
 
 function updatePhotoParallax() {
 
-  /*
-     الصورة الأولى
-  */
 
-  const heroSection =
-    document.querySelector(
-      ".hero-section"
-    );
-
-
-  const heroRect =
-    heroSection
-      .getBoundingClientRect();
-
+  /* HERO */
 
   if (
-    heroRect.bottom > 0 &&
-    heroRect.top <
-    window.innerHeight
+    heroImage &&
+    heroSection
   ) {
 
-    const offset =
-      heroRect.top *
-      -0.06;
+    const heroRect =
+      heroSection
+        .getBoundingClientRect();
 
 
-    heroImage.style.transform =
-      `scale(1.05) translateY(${offset}px)`;
+    if (
+      heroRect.bottom >
+      0
+      &&
+      heroRect.top <
+      window.innerHeight
+    ) {
+
+      const heroOffset =
+        heroRect.top *
+        -0.045;
+
+
+      heroImage.style.transform =
+        `scale(1.06) translateY(${heroOffset}px)`;
+
+    }
 
   }
 
 
-  /*
-     الصورة الثانية
-  */
 
-  const storySection =
-    document.querySelector(
-      ".cinematic-story-section"
-    );
-
-
-  const storyRect =
-    storySection
-      .getBoundingClientRect();
-
+  /* SECOND PHOTO */
 
   if (
-    storyRect.bottom > 0 &&
-    storyRect.top <
-    window.innerHeight
+    storyImage &&
+    storySection
   ) {
 
-    const offset =
-      storyRect.top *
-      -0.045;
+    const storyRect =
+      storySection
+        .getBoundingClientRect();
 
 
-    storyImage.style.transform =
-      `scale(1.07) translateY(${offset}px)`;
+    if (
+      storyRect.bottom >
+      0
+      &&
+      storyRect.top <
+      window.innerHeight
+    ) {
+
+      const storyOffset =
+        storyRect.top *
+        -0.04;
+
+
+      storyImage.style.transform =
+        `scale(1.08) translateY(${storyOffset}px)`;
+
+    }
 
   }
 
@@ -561,7 +655,7 @@ updatePhotoParallax();
 
 
 /* ==========================================
-   REVEAL
+   REVEAL ON SCROLL
 ========================================== */
 
 const revealElements =
@@ -611,6 +705,7 @@ const revealObserver =
   );
 
 
+
 revealElements.forEach(
   element => {
 
@@ -639,8 +734,11 @@ function updateCountdown() {
 
 
 
+  /* انتهى العداد */
+
   if (
-    distance <= 0
+    distance <=
+    0
   ) {
 
     document.getElementById(
@@ -673,9 +771,16 @@ function updateCountdown() {
       );
 
 
+    /*
+      هنا ما نستخدم data-ar/data-en
+      لأن المناسبة بدأت.
+    */
+
     message.textContent =
       currentLanguage === "ar"
+
         ? "حان موعدنا"
+
         : "THE DAY IS HERE";
 
 
@@ -695,6 +800,7 @@ function updateCountdown() {
         24
       )
     );
+
 
 
   const hours =
@@ -717,6 +823,7 @@ function updateCountdown() {
     );
 
 
+
   const minutes =
     Math.floor(
       (
@@ -735,6 +842,7 @@ function updateCountdown() {
     );
 
 
+
   const seconds =
     Math.floor(
       (
@@ -749,6 +857,7 @@ function updateCountdown() {
     );
 
 
+
   document.getElementById(
     "days"
   ).textContent =
@@ -758,6 +867,7 @@ function updateCountdown() {
       3,
       "0"
     );
+
 
 
   document.getElementById(
@@ -771,6 +881,7 @@ function updateCountdown() {
     );
 
 
+
   document.getElementById(
     "minutes"
   ).textContent =
@@ -780,6 +891,7 @@ function updateCountdown() {
       2,
       "0"
     );
+
 
 
   document.getElementById(
@@ -799,6 +911,7 @@ function updateCountdown() {
 updateCountdown();
 
 
+
 setInterval(
   updateCountdown,
   1000
@@ -807,7 +920,7 @@ setInterval(
 
 
 /* ==========================================
-   ICS DATE FORMAT
+   ICS FORMAT
 ========================================== */
 
 function formatICSDate(
@@ -931,8 +1044,11 @@ async function shareInvitation() {
 
     title:
       currentLanguage === "ar"
+
         ? EVENT.titleAR
+
         : EVENT.titleEN,
+
 
     text:
       currentLanguage === "ar"
@@ -941,10 +1057,12 @@ async function shareInvitation() {
 
         : "We invite you to share the beginning of our new chapter.",
 
+
     url:
       window.location.href
 
   };
+
 
 
   if (
@@ -969,6 +1087,7 @@ async function shareInvitation() {
     return;
 
   }
+
 
 
   try {
@@ -1010,7 +1129,7 @@ async function shareInvitation() {
   }
 
 }
-
+	
 
 
 shareButton.addEventListener(
