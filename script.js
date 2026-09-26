@@ -105,116 +105,85 @@ const header =
 
 
 /* ==========================================
-   LANGUAGE
+   LANGUAGE — MANUAL ONLY
 ========================================== */
 
-let currentLanguage =
-  "ar";
+let currentLanguage = "ar";
+
+const languageButton =
+  document.getElementById("languageButton");
+
+const languageButtonText =
+  document.getElementById("languageButtonText");
 
 
+function setLanguage(language) {
 
-
-
-
-function translatePage(
-  language
-) {
-
-  currentLanguage =
-    language;
-
+  currentLanguage = language;
 
   const elements =
     document.querySelectorAll(
       "[data-ar][data-en]"
     );
 
+  elements.forEach(element => {
 
-  elements.forEach(
-    element => {
+    const text =
+      language === "ar"
+        ? element.getAttribute("data-ar")
+        : element.getAttribute("data-en");
 
-      const value =
-        element.getAttribute(
-          `data-${language}`
-        );
+    element.textContent = text;
 
-
-      element.textContent =
-        value;
-
-    }
-  );
+  });
 
 
-  if (
-    language === "ar"
-  ) {
+  if (language === "ar") {
 
-    document.documentElement.lang =
-      "ar";
+    document.documentElement.lang = "ar";
+    document.documentElement.dir = "rtl";
 
+    document.body.classList.remove("en");
+    document.body.classList.add("ar");
 
-    document.documentElement.dir =
-      "rtl";
-
-
-    body.classList.remove(
-      "en"
-    );
-
-
-    body.classList.add(
-      "ar"
-    );
-
-
-    languageButtonText.textContent =
-      "EN";
+    languageButtonText.textContent = "EN";
 
   } else {
 
-    document.documentElement.lang =
-      "en";
+    document.documentElement.lang = "en";
+    document.documentElement.dir = "ltr";
 
+    document.body.classList.remove("ar");
+    document.body.classList.add("en");
 
-    document.documentElement.dir =
-      "ltr";
-
-
-    body.classList.remove(
-      "ar"
-    );
-
-
-    body.classList.add(
-      "en"
-    );
-
-
-    languageButtonText.textContent =
-      "AR";
+    languageButtonText.textContent = "AR";
 
   }
 
 }
 
 
+languageButton.addEventListener(
+  "click",
+  () => {
 
-function toggleLanguage() {
+    if (currentLanguage === "ar") {
 
-  const nextLanguage =
-    currentLanguage === "ar"
-      ? "en"
-      : "ar";
+      setLanguage("en");
 
-  translatePage(
-    nextLanguage
-  );
+    } else {
 
-}
+      setLanguage("ar");
+
+    }
+
+  }
+);
 
 
+/* يبدأ الموقع بالعربي */
 
+setLanguage("ar");
 /* ==========================================
    THEME
 
